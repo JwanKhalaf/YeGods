@@ -1,0 +1,43 @@
+@using YeGods.ViewModels
+@model Dictionary<char, List<YeGods.ViewModels.GlossaryViewModel>>
+
+@{
+  Layout = "_Layout";
+}
+
+<div class="content-page">
+  <header>
+    <div class="breadcrumbs">
+      <a asp-controller="Home" asp-action="Index" class="breadcrumb__item">Home</a> /
+      <a asp-controller="Home" asp-action="Glossary" class="breadcrumb__item">Glossary</a>
+    </div>
+    <h1 class="deity-name h1__white">Glossary</h1>
+  </header>
+
+  <section class="main-content">
+    <p class="glossary__letter__entry-info">
+      Below you will find terms often used by those who are describing gods or their attributes and characteristics.  You will find here definitions of a caduceus, an ankh. Which gods are tutelary or conflated, cognate or chthonic.
+    </p>
+
+    <p class="glossary__letter__entry-info">A cautionary word. A fellow called Alexander David Mackenzie, a renowned and respected folklorist, invented a deity named Beira in the last century. She was a romanticised, conflated version of the Cailleach Bheur, a frightful wintry figure known from several sources in the Scottish, Irish and Isle of Man Celtic traditions.  Beira now appears in most lists of Celtic deities.</p>
+
+    <p class="glossary__letter__entry-info">Aballach, is a hypothetical divinity mooted in 1891 by Sir John Rhys as giving his name to Avalon, King Arthur's last resting place. In Arthurian legend he has no noticeably divine attributes; he is merely a dynastic head man or king (Afallach), father to 'divine mother' Modron or to Morgan Le Fay (both possibly adaptations of  Matrona, goddess of the Marne river).</p>
+
+    <p class="glossary__letter__entry-info">I give these two examples to warn readers that from time to time, and over centuries if not millennia, writers have seen fit to fill gaps in pantheons, or marry pantheons or legends together, and in so doing, have traditionally had no compunctions about inventing deities.</p>
+
+    <p class="glossary__letter__entry-info">Hesiod and Homer, for instance, should be above reproof in this matter; but close reading shows they are not. I have no doubt this still goes on. Where I suspect such shenanigans, I will add a note or put something like 'known from one reference only'. Even this does not solve the problem. In our Google/Wikipedia age, a 'false' god invented for a joke or gullibility test can fly round the world faster than Iris, her hubbie Zephyrus, or the winged Hermes, and can be glibly added to list of deities alongside perfectly legitimate, long-standing, multi-traditional, well-cited supernaturals, like the little lad who appears three times in that super-long school photo. I would be surprised if a handful of these spurious deities haven't crept past my watchful gates. Be warned.</p>
+
+
+    @foreach (KeyValuePair<char, List<GlossaryViewModel>> item in Model)
+    {
+      <h2 class="glossary__letter">@item.Key</h2>
+
+      foreach (GlossaryViewModel glossaryEntry in item.Value)
+      {
+        <h3 class="glossary__letter__entry-title" id="@glossaryEntry.Name">@glossaryEntry.Name</h3>
+        <strong class="glossary__letter__entry-origin">Origin: @glossaryEntry.Origin</strong>
+        <p class="glossary__letter__entry-info">@glossaryEntry.Description</p>
+      }
+    }
+</section>
+</div>

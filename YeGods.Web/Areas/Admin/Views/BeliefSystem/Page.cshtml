@@ -1,0 +1,79 @@
+@using YeGods.ViewModels
+@model BeliefSystemPageViewModel
+
+@{
+  Layout = "_AdminLayout";
+}
+
+<h1>Manage Belief Systems</h1>
+
+<div class="search belief-system-search">
+  <form asp-area="Admin" asp-controller="BeliefSystem" asp-action="Page">
+    <input asp-for="Search.SearchTerm" class="form-control" type="text" placeholder="Search belief systems" aria-label="search belief systems">
+    <input type="submit" value="Filter Belief Systems" class="btn btn-primary pull-right" />
+    <a asp-area="Admin" asp-controller="BeliefSystem" asp-action="Page" class="btn btn-danger pull-right">
+      Clear Filter
+    </a>
+  </form>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Geographical Region</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (BeliefSystemViewModel beliefSystem in Model.BeliefSystems)
+    {
+      <tr>
+        <td>@beliefSystem.Name</td>
+        <td>@beliefSystem.GeographicalRegion</td>
+        <td>@beliefSystem.Description</td>
+        <td>
+          <a asp-area="Admin"
+             asp-controller="BeliefSystem"
+             asp-action="Edit"
+             asp-route-id="@beliefSystem.Id"
+             class="btn btn-warning btn-sm">
+            Edit
+          </a>
+          
+          <a asp-area="Admin"
+             asp-controller="BeliefSystem"
+             asp-action="Delete"
+             asp-route-id="@beliefSystem.Id"
+             class="btn btn-danger btn-sm">
+            Delete
+          </a>
+
+          <a asp-controller="BeliefSystem"
+             asp-action="Details"
+             asp-route-slug="@beliefSystem.Slug"
+             class="btn btn-primary btn-sm">
+            View
+          </a>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+  <cs-pager cs-paging-pagesize="10"
+            cs-paging-pagenumber="@Model.Pagination.CurrentPage"
+            cs-paging-totalitems="@Model.Pagination.TotalRecords"
+            cs-pagenumber-param="page"
+            asp-controller="BeliefSystem"
+            asp-action="Page"
+            cs-pager-li-current-class="page-item active"
+            cs-pager-li-other-class="page-item"
+            cs-pager-li-non-active-class="page-item disabled"
+            cs-pager-link-current-class="page-link"
+            cs-pager-link-other-class="page-link"></cs-pager>
+  <a asp-area="Admin" asp-controller="BeliefSystem" asp-action="Create" class="btn btn-primary pull-right">
+    Add New Belief System
+  </a>
+</div>

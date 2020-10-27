@@ -1,0 +1,70 @@
+@model YeGods.ViewModels.RandomDeityViewModel
+
+@section Styles
+{
+  <link href="~/lib/js-autocomplete/auto-complete.css" rel="stylesheet" type="text/css" />
+  <style>
+    .home-deity {
+      background: transparent url("../images/@(Model.BackgroundImageName).png") no-repeat 120% 50%;
+      background-size: 55%;
+    }
+  </style>
+}
+
+<div class="home">
+  <div class="search">
+    <div class="content">
+      <div class="brand">
+        <h1>
+          <span>Ye</span> Gods
+        </h1>
+        <h2>Welcome to the home of the gods.</h2>
+      </div>
+
+      <form asp-controller="Search" asp-action="Search" method="post" role="form" class="search__search-form">
+        <input type="text" name="searchTerm" placeholder="Search for a deity or a belief system" class="search__search-form__input" />
+        <input type="hidden" name="isDeity" id="is-deity-flag" />
+        <input type="submit" value="Explore" class="search__search-form__submit-btn" />
+      </form>
+      
+      @if (!string.IsNullOrEmpty(Model.Name))
+      {
+        <p class="random-entry">Not sure what you're looking for? Here is a random entity: <a asp-controller="Deity" asp-action="Details" asp-route-slug="@Model.Slug">@Model.Name</a>.</p>
+      }
+      <p class="contribute-text">Wish to contribute? Please <a asp-controller="Home" asp-action="Contribute">read this</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <ul>
+      <li class="article-item">
+        <a asp-controller="Home" asp-action="About" class="article-link">
+          <img src="~/images/spirit.jpg" alt="placeholder" class="article-link__image" />
+          <div class="article-link__text">
+            <h4 class="article-link__title">About the site</h4>
+            <p class="article-link__description">Read about the underlying inspiration and thoughts behind the building of YeGods.</p>
+          </div>
+        </a>
+      </li>
+      <li class="article-item">
+        <a asp-controller="Home" asp-action="Glossary" class="article-link">
+          <img src="~/images/thinker.jpg" alt="placeholder" class="article-link__image" />
+          <div class="article-link__text">
+            <h4 class="article-link__title">Glossary</h4>
+            <p class="article-link__description">Find the terms and tools godly folk use to describe the supernatural.</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+    <a asp-controller="Home" asp-action="PrivacyPolicy" class="footer__link">Privacy Policy</a> · <a asp-controller="Home" asp-action="Acknowledgements" class="footer__link">Acknowledgements</a>
+  </footer>
+</div>
+
+<div class="home-deity"></div>
+
+@section Scripts
+  {
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/js-autocomplete/auto-complete.min.js"></script>
+  <script src="~/js/home-search.min.js"></script>
+}

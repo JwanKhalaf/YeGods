@@ -1,0 +1,43 @@
+@model YeGods.ViewModels.DeityViewModel
+
+@{
+  Layout = "_Layout";
+}
+
+<div class="content-page">
+  <header>
+    <div class="breadcrumbs">
+      <a asp-controller="Home" asp-action="Index" class="breadcrumb__item">Home</a> /
+      <a href="#" class="breadcrumb__item">Deities</a> /
+      <a asp-controller="Deity" asp-action="Details" asp-route-slug="@Model.Slug" class="breadcrumb__item">@Model.Name</a>
+    </div>
+    <h1 class="deity-name h1__white">@Model.Name</h1>
+  </header>
+
+  <section class="main-content">
+    @Html.Raw(Model.Description)
+    <hr/>
+    <p class="report-paragraph">Found something wrong? Please <a asp-controller="Deity" asp-action="SendEmail" asp-route-slug="@Model.Slug">let us know</a>.</p>
+  </section>
+
+  <section class="deity-meta">
+    <div class="attributes">
+      <div class="attribute">
+        <label class="attribute-label">Origin</label>
+        <h4 class="attribute-value">@Model.Origin</h4>
+      </div>
+      <div class="attribute">
+        <label class="attribute-label">Category</label>
+        <h4 class="attribute-value">@Model.Category.Name</h4>
+      </div>
+      <div class="attribute">
+        <label class="attribute-label">Aliases</label>
+        <h4 class="attribute-value">@Model.Aliases</h4>
+      </div>
+      <div class="attribute">
+        <label class="attribute-label">Sex</label>
+        <h4 class="attribute-value">@Model.Sex</h4>
+      </div>
+    </div>
+  </section>
+</div>

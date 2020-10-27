@@ -1,0 +1,59 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>NotFound</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
+  <style>
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('../../images/prism.png') repeat 0 0 #000000;
+    }
+
+    .wrap {
+      width: 800px;
+    }
+
+    h1 {
+      color: #fefefe;
+      font-size: 5rem;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    p {
+      color: #fefefe;
+      font-size: 2rem;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    p a {
+      text-decoration: none;
+      color: #8FBFC1;
+    }
+
+    p a:hover {
+      color: #69DDFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>404 | Not Found</h1>
+    <p>Sorry, we've searched Heaven and Earth but couldn't find the item you typed.</p>
+    <p>You can <a asp-controller="Home" asp-action="Index">go back</a> and try another search term.</p>
+  </div>  
+</body>
+</html>

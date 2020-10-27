@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  yegods:
+    build:
+      context: .
+      dockerfile: ./YeGods.Web/Dockerfile
+      labels:
+        org.yegods.description: "The ye gods application"
+    image: yegods:latest
+    ports:
+      - "5010:5005"
+    env_file:
+      - ./variables.env
+    depends_on:
+      - database
+  database:
+    image: postgres:13.0
+    ports:
+      - "8002:5432"
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+    env_file:
+      - ./variables.env
+
+networks:
+  default:
+    external:
+      name: yegods_net
+
+volumes:
+  data-volume:

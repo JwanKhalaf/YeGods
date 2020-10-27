@@ -1,0 +1,40 @@
+@model YeGods.ViewModels.BeliefSystemCreateViewModel
+
+@{
+  Layout = "_AdminLayout";
+}
+
+@section Styles
+{
+  <link href="~/lib/simplemde/dist/simplemde.min.css" rel="stylesheet" type="text/css" />
+}
+
+<h1>Add a New Belief System</h1>
+
+<form asp-area="Admin" asp-controller="BeliefSystem" asp-action="Create" method="post" role="form">
+  <div class="form-group">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label asp-for="Aliases"></label>
+    <input asp-for="Aliases" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label asp-for="GeographicalRegion"></label>
+    <input asp-for="GeographicalRegion" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control" id="deity-description"></textarea>
+  </div>
+  <input type="submit" value="Add New Belief System" class="btn btn-primary pull-right" />
+  <a asp-area="Admin" asp-controller="BeliefSystem" asp-action="Page" class="btn btn-default pull-right">Cancel</a>
+</form>
+
+
+@section Scripts
+{
+  <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+  <script src="~/js/edit-deity.min.js"></script>
+}

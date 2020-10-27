@@ -1,0 +1,10 @@
+$color__primary--light: #DD0000 !default;
+$color__primary: #C10000 !default;
+$color__primary--dark: #990000 !default;
+
+$base__font-size: 15 !default;
+$base__line: 20 !default;
+
+@function calc-em($target, $context: $base__font-size) {
+  @return ($target / $context) * 1em;
+}

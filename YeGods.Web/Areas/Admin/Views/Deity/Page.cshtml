@@ -1,0 +1,76 @@
+@using YeGods.ViewModels
+@model YeGods.ViewModels.DeityPageViewModel
+
+@{
+  Layout = "_AdminLayout";
+}
+
+<h1>Manage Deities</h1>
+
+<div class="search deity-search">
+  <form asp-area="Admin" asp-controller="Deity" asp-action="Page">
+    <input asp-for="Search.SearchTerm" class="form-control" type="text" placeholder="Search deities" aria-label="search deities">
+    <input type="submit" value="Filter Deities" class="btn btn-primary pull-right" />
+    <a asp-area="Admin" asp-controller="Deity" asp-action="Page" class="btn btn-danger pull-right">
+      Clear Filter
+    </a>
+  </form>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Origin</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (DeityViewModel deity in Model.Deities)
+      {
+        <tr>
+          <td>@deity.Name</td>
+          <td>@deity.Origin</td>
+          <td>@deity.Description</td>
+          <td>@deity.Category.Name</td>
+          <td>
+            <a asp-area="Admin"
+               asp-controller="Deity"
+               asp-action="Edit"
+               asp-route-id="@deity.Id"
+               class="btn btn-warning btn-sm">
+              Edit
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Deity"
+               asp-action="Delete"
+               asp-route-id="@deity.Id"
+               class="btn btn-danger btn-sm">
+              Delete
+            </a>
+
+            <a asp-controller="Deity" asp-action="Details" asp-route-slug="@deity.Slug" class="btn btn-primary btn-sm">View</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <cs-pager cs-paging-pagesize="10"
+            cs-paging-pagenumber="@Model.Pagination.CurrentPage"
+            cs-paging-totalitems="@Model.Pagination.TotalRecords"
+            cs-pagenumber-param="page"
+            asp-controller="Deity"
+            asp-action="Page"
+            cs-pager-li-current-class="page-item active"
+            cs-pager-li-other-class="page-item"
+            cs-pager-li-non-active-class="page-item disabled"
+            cs-pager-link-current-class="page-link"
+            cs-pager-link-other-class="page-link"></cs-pager>
+  <a asp-area="Admin" asp-controller="Deity" asp-action="Create" class="btn btn-primary pull-right">
+    Add New Deity
+  </a>
+</div>

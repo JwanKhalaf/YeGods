@@ -1,0 +1,58 @@
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+p {
+  font-family: "Crimson Text", serif;
+  font-size: 1.3rem;
+  line-height: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 4vw;
+}
+
+h2 {
+  font-size: 2vw;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 1vw;
+  margin-bottom: 20px;
+}
+
+.h1__white {
+  color: $white;
+}
+
+.glossary__letter {
+  font-size: 7rem;
+  margin-bottom: 50px;
+  font-family: "Playfair Display", serif;
+}
+
+.glossary__letter__entry-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-family: "Playfair Display", serif;
+}
+
+.glossary__letter__entry-origin {
+  display: inline-block;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-family: "Abel", sans-serif;
+}
+
+.glossary__letter__entry-info,
+#contribute-info p {
+  line-height: 1.8rem;
+  font-size: 1.25rem;
+}

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>    
+    <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YeGods.DataAccess\YeGods.DataAccess.csproj" />
+    <ProjectReference Include="..\YeGods.ViewModels\YeGods.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

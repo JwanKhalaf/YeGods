@@ -1,0 +1,89 @@
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="YeGods Admin Dashboard">
+  <meta name="author" content="J Khalaf">
+  <title>YeGods | Administration</title>
+  <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="~/css/admin.min.css" rel="stylesheet" type="text/css">
+  @RenderSection("Styles", required: false)
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">YeGods Administration</a>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        @if (SignInManager.IsSignedIn(User))
+        {
+          <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})" method="post" id="logoutForm" class="navbar-right">
+            <button type="submit" class="nav-link">Logout</button>
+          </form>
+        }
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a asp-area="Admin" asp-controller="Deity" asp-action="Page" class="nav-link" is-active-route>
+                <span data-feather="users"></span>
+                Deities
+              </a>
+            </li>
+            <li class="nav-item">
+              <a asp-area="Admin" asp-controller="BeliefSystem" asp-action="Page" class="nav-link" is-active-route>
+                <span data-feather="sun"></span>
+                Belief Systems
+              </a>
+            </li>
+            <li class="nav-item">
+              <a asp-area="Admin" asp-controller="Category" asp-action="Page" class="nav-link" is-active-route>
+                <span data-feather="server"></span>
+                Categories
+              </a>
+            </li>
+            <li class="nav-item">
+              <a asp-area="Admin" asp-controller="Glossary" asp-action="Page" class="nav-link" is-active-route>
+                <span data-feather="book-open"></span>
+                Glossary Entries
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        @RenderBody()
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="../../assets/js/vendor/popper.min.js"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+  <script>
+    feather.replace()
+  </script>
+
+  @RenderSection("Scripts", required: false)
+</body>
+</html>

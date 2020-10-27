@@ -1,0 +1,37 @@
+@model YeGods.ViewModels.EntrySuggestionViewModel
+
+<div class="deity-report">
+  <div class="wrapper">
+    <h2>Suggest an entry</h2>
+    
+    <p>You are suggesting a new entry to be added to the site. Please include all your sources at the end of the message.</p>
+
+    <form asp-controller="Home" asp-action="SuggestEntry" method="post" role="form">
+      <div class="form-group">
+        <label>What are you adding?</label>
+        <input asp-for="EntryType" type="radio" value="Deity" class="form-control"/> Deity
+        <input asp-for="EntryType" type="radio" value="Belief System" class="form-control"/> Belief System
+      </div>
+      
+      <div class="form-group">
+        <label>Entity Name</label>
+        <input asp-for="EntryName" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label asp-for="ReporterName"></label>
+        <input asp-for="ReporterName" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label asp-for="ReporterEmail"></label>
+        <input asp-for="ReporterEmail" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Information on the Entity</label>
+        <textarea asp-for="Message" class="form-control" id="email-body" rows="6"></textarea>
+      </div>
+      <input type="submit" value="Submit Report" class="btn btn-primary" />
+      <a asp-area="" asp-controller="Home" asp-action="Index">Cancel</a>
+    </form>
+  </div>
+</div>

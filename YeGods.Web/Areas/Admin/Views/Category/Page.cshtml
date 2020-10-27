@@ -1,0 +1,46 @@
+@using YeGods.ViewModels
+@model YeGods.ViewModels.CategoryPageViewModel
+
+@{
+  Layout = "_AdminLayout";
+}
+
+<h1>Manage Categories</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Parent Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (CategoryViewModel category in Model.Categories)
+      {
+        <tr>
+          <td>@category.Name</td>
+          <td>@category.ParentCategoryName</td>
+          <td>
+            <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning btn-sm">Edit</a>
+            <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <cs-pager cs-paging-pagesize="10"
+            cs-paging-pagenumber="@Model.Pagination.CurrentPage"
+            cs-paging-totalitems="@Model.Pagination.TotalRecords"
+            cs-pagenumber-param="page"
+            asp-controller="Category"
+            asp-action="Page"
+            cs-pager-li-current-class="page-item active"
+            cs-pager-li-other-class="page-item"
+            cs-pager-li-non-active-class="page-item disabled"
+            cs-pager-link-current-class="page-link"
+            cs-pager-link-other-class="page-link"></cs-pager>
+  <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-primary pull-right">
+    Add New Category
+  </a>
+</div>

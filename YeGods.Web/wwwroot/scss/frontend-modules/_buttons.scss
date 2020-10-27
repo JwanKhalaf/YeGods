@@ -1,0 +1,29 @@
+.btn {
+  padding: 10px 20px;
+  border: 1px solid $pagination-border-color;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-family: 'Roboto Slab', sans-serif;
+
+  &.pull-right {
+    margin: 0 0 0 15px;
+  }
+}
+
+.btn-xs {
+  font-size: 14px;
+  padding: 4px 8px;
+  font-size: .875rem;
+}
+
+.btn-warning {
+  background: #ffc107;
+  color: #212529;
+  border-color: #ffc107;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}

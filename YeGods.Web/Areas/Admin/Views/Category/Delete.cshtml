@@ -1,0 +1,25 @@
+@model YeGods.ViewModels.CategoryDeleteViewModel
+
+@{
+  Layout = "_AdminLayout";
+}
+
+<h1>Delete a Category</h1>
+
+<div class="row">
+  <div class="col-md-12">
+    <form asp-area="Admin" asp-controller="Category" asp-action="Delete" method="post" role="form">
+      @if (ViewBag.Message != null)
+      {
+        <p><strong>@ViewBag.Message</strong></p>
+      }
+      else
+      {
+        <p>Are you sure you want to delete the @Model.Name category?</p>
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+      }
+      <a asp-area="Admin" asp-controller="Category" asp-action="Page">Cancel</a>
+    </form>
+  </div>
+</div>

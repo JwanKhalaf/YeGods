@@ -1,0 +1,36 @@
+@model YeGods.ViewModels.EmailReportViewModel
+
+<div class="deity-report">
+  <div class="wrapper">
+    <h2>Report a correction</h2>
+    
+    <p>You are reporting a correction with regards to the <strong>'@Model.EntryName'</strong> entry.</p>
+
+    <form asp-controller="Deity" asp-action="SendEmail" method="post" role="form">
+      <input type="hidden" asp-for="EntrySlug"/>
+
+      <input type="hidden" asp-for="EntryName"/>
+      
+      <input type="hidden" asp-for="IsOfTypeDeity"/>
+
+      <div class="form-group">
+        <label asp-for="ReporterName"></label>
+        <input asp-for="ReporterName" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="ReporterEmail"></label>
+        <input asp-for="ReporterEmail" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="Subject"></label>
+        <input asp-for="Subject" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label asp-for="Message"></label>
+        <textarea asp-for="Message" class="form-control" id="email-body" rows="6"></textarea>
+      </div>
+      <input type="submit" value="Submit Report" class="btn btn-primary"/>
+      <a asp-area="" asp-controller="BeliefSystem" asp-action="Details" asp-route-slug="@Model.EntrySlug">Cancel</a>
+    </form>
+  </div>
+</div>

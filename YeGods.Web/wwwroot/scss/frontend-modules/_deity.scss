@@ -1,0 +1,106 @@
+.content-page {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, min-content);
+}
+
+header {
+  grid-column: 1 / span 10;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: 50px 1fr;
+  background: $dark-navy;
+}
+
+.breadcrumbs,
+.deity-name {
+  grid-column: 3 / span 6;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  color: $white;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+.breadcrumb__item {
+  color: $white;
+  font-family: "Roboto Slab", sans-serif;
+  letter-spacing: 1px;
+  margin: 0 10px 0 10px;
+  font-size: 0.9rem;
+}
+
+.breadcrumb__item:first-child {
+  margin-left: 0
+}
+
+.deity-name {
+  display: flex;
+  align-items: center;
+  letter-spacing: 3px;
+  padding: 15px 0 40px 0;
+}
+
+.main-content {
+  grid-column: 3 / span 3;
+  grid-row: 3 / span 8;
+  padding: 30px 0 0 0;
+}
+
+.deity-meta {
+  grid-column: 7 / span 2;
+  grid-row: 3 / span 6;
+  background: $dark-navy;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  padding: 30px 50px 0 50px;
+}
+
+.attribute {
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid $light-blue;
+  padding: 0 0 20px 0;
+}
+
+.attribute:last-child {
+  border: none;
+}
+
+.attribute-label {
+  display: block;
+  font-family: "Abel", sans-serif;
+  color: $light-blue;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  margin: 0 0 5px 0;
+  letter-spacing: 2px;
+}
+
+.attribute-value {
+  color: $white;
+  font-size: 2rem;
+  font-family: "Playfair Display", serif;
+  line-height: 3rem;
+}
+
+.report-paragraph {
+  font-size: 1.1rem;
+  color: #333333;
+
+  a {
+    color: #729abb;
+
+    &:hover {
+      color: #86b5dc;
+    }
+  }
+}
+
+hr {
+  border: 1px solid grey;
+  opacity: 0.2;
+}
