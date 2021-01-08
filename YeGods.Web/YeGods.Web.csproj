@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-YeGods.Web-1AE97264-1A4D-471F-A4FA-DD75CA56676D</UserSecretsId>
+    <UserSecretsId>yegods-1ae97264-1a4d-471f-a4fa-dd75ca56676d</UserSecretsId>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
