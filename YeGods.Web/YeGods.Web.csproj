@@ -34,4 +34,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <Target Name="MyPreCompileTarget" BeforeTargets="Build">
+    <Exec Command="npx gulp default" />
+  </Target>
 </Project>

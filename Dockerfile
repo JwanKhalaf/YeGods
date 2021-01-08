@@ -9,6 +9,24 @@ WORKDIR /app
 # we now copy all the files (from local machine) to /app (in the container).
 COPY . ./
 
+# update the ubuntu packages and install curl
+RUN apt-get update -yq && apt-get upgrade -yq
+
+# download node
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+# install nodejs
+RUN apt-get install -y nodejs
+
+# install dart sass
+RUN npm install -g sass
+
+# install gulp-cli globally
+RUN npm install gulp-cli -g
+
+# we run npm for the gulp minification and sass compilation
+RUN npm install --prefix ./YeGods.Web/
+
 # run unit tests within the solution.
 RUN dotnet test YeGods.sln
 
