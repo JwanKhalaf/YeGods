@@ -5,7 +5,7 @@ namespace YeGods.Web.Areas.Admin.Controllers
   using Microsoft.EntityFrameworkCore.Storage;
   using Services;
   using ViewModels;
-  using YeGods.ViewModels.Shared;
+  using ViewModels.Shared;
 
   [Area("Admin")]
   [Route("admin/beliefsystem")]
@@ -21,10 +21,10 @@ namespace YeGods.Web.Areas.Admin.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Page(SearchViewModel search, int page = 1)
     {
-      BeliefSystemPageViewModel deities = await this.beliefSystemService
+      BeliefSystemPageViewModel deities = await beliefSystemService
         .GetPagedBeliefSystemsAsync(search, page);
 
-      return this.View(deities);
+      return View(deities);
     }
 
     [Route("[action]")]
@@ -32,79 +32,79 @@ namespace YeGods.Web.Areas.Admin.Controllers
     {
       BeliefSystemCreateViewModel newBeliefSystem = new BeliefSystemCreateViewModel();
 
-      return this.View(newBeliefSystem);
+      return View(newBeliefSystem);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Create(BeliefSystemCreateViewModel newBeliefSystem)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.View(newBeliefSystem);
+        return View(newBeliefSystem);
       }
 
-      await this.beliefSystemService.CreateNewBeliefSystem(newBeliefSystem);
+      await beliefSystemService.CreateNewBeliefSystem(newBeliefSystem);
 
-      return this.Redirect("Page");
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Edit(int id)
     {
-      BeliefSystemUpdateViewModel beliefSystemToUpdate = await this.beliefSystemService
+      BeliefSystemUpdateViewModel beliefSystemToUpdate = await beliefSystemService
         .GetBeliefSystemByIdForUpdateAsync(id);
 
-      return this.View(beliefSystemToUpdate);
+      return View(beliefSystemToUpdate);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Edit(BeliefSystemUpdateViewModel updatedBeliefSystem)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.View(updatedBeliefSystem);
+        return View(updatedBeliefSystem);
       }
 
-      await this.beliefSystemService.UpdateBeliefSystemAsync(updatedBeliefSystem);
-      return this.Redirect("Page");
+      await beliefSystemService.UpdateBeliefSystemAsync(updatedBeliefSystem);
+      return Redirect("Page");
     }
 
     public async Task<IActionResult> Delete(
       int? id,
       bool? saveChangesError = false)
     {
-      if (id == null) return this.BadRequest();
+      if (id == null) return BadRequest();
 
       if (saveChangesError.GetValueOrDefault())
       {
-        this.ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+        ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
       }
 
-      BeliefSystemViewModel viewModel = await this.beliefSystemService.GetBeliefSystemByIdAsync(id.Value);
+      BeliefSystemViewModel viewModel = await beliefSystemService.GetBeliefSystemByIdAsync(id.Value);
 
-      if (viewModel == null) return this.NotFound();
+      if (viewModel == null) return NotFound();
 
-      return this.View(viewModel);
+      return View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-      if (id == 0) return this.BadRequest();
+      if (id == 0) return BadRequest();
 
       try
       {
-        await this.beliefSystemService.DeleteBeliefSystemAsync(id);
+        await beliefSystemService.DeleteBeliefSystemAsync(id);
       }
       catch (RetryLimitExceededException)
       {
-        return this.RedirectToAction("Delete", new { id, saveChangesError = true });
+        return RedirectToAction("Delete", new { id, saveChangesError = true });
       }
 
-      return this.RedirectToAction("Page", new { showDeleted = false });
+      return RedirectToAction("Page", new { showDeleted = false });
     }
   }
 }

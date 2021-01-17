@@ -36,34 +36,34 @@ namespace YeGods.Web.Areas.Identity.Pages.Account
 
     public async Task<IActionResult> OnPostAsync()
     {
-      if (this.ModelState.IsValid)
+      if (ModelState.IsValid)
       {
-        IdentityUser user = await this.userManager.FindByEmailAsync(this.Input.Email);
+        IdentityUser user = await userManager.FindByEmailAsync(Input.Email);
 
-        if (user == null || !(await this.userManager.IsEmailConfirmedAsync(user)))
+        if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
         {
           // Don't reveal that the user does not exist or is not confirmed
-          return this.RedirectToPage("./ForgotPasswordConfirmation");
+          return RedirectToPage("./ForgotPasswordConfirmation");
         }
 
         // For more information on how to enable account confirmation and password reset please 
         // visit https://go.microsoft.com/fwlink/?LinkID=532713
-        string code = await this.userManager.GeneratePasswordResetTokenAsync(user);
+        string code = await userManager.GeneratePasswordResetTokenAsync(user);
 
-        string callbackUrl = this.Url.Page(
+        string callbackUrl = Url.Page(
             "/Account/ResetPassword",
             pageHandler: null,
             values: new { code },
-            protocol: this.Request.Scheme);
+            protocol: Request.Scheme);
 
-        await this.emailSender.SendEmailAsync(this.Input.Email,
+        await emailSender.SendEmailAsync(Input.Email,
             "Reset Password",
             $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-        return this.RedirectToPage("./ForgotPasswordConfirmation");
+        return RedirectToPage("./ForgotPasswordConfirmation");
       }
 
-      return this.Page();
+      return Page();
     }
   }
 }

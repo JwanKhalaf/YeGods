@@ -17,7 +17,7 @@ namespace YeGods.Web
   {
     public Startup(IConfiguration configuration)
     {
-      this.Configuration = configuration;
+      Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
@@ -30,10 +30,10 @@ namespace YeGods.Web
       Console.WriteLine($"Here is the connection string: {databaseConnectionString}");
 
       services
-        .Configure<PaginationSettings>(this.Configuration.GetSection("PaginationSettings"));
+        .Configure<PaginationSettings>(Configuration.GetSection("PaginationSettings"));
 
       services
-        .Configure<EmailSettings>(this.Configuration.GetSection("EmailSettings"));
+        .Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
       services
         .Configure<CookiePolicyOptions>(options =>

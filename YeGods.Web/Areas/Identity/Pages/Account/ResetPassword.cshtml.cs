@@ -43,45 +43,45 @@ namespace YeGods.Web.Areas.Identity.Pages.Account
     {
       if (code == null)
       {
-        return this.BadRequest("A code must be supplied for password reset.");
+        return BadRequest("A code must be supplied for password reset.");
       }
 
-      this.Input = new InputModel
+      Input = new InputModel
       {
         Code = code
       };
 
-      return this.Page();
+      return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.Page();
+        return Page();
       }
 
-      IdentityUser user = await this.userManager.FindByEmailAsync(this.Input.Email);
+      IdentityUser user = await userManager.FindByEmailAsync(Input.Email);
 
       if (user == null)
       {
         // Don't reveal that the user does not exist
-        return this.RedirectToPage("./ResetPasswordConfirmation");
+        return RedirectToPage("./ResetPasswordConfirmation");
       }
 
-      IdentityResult result = await this.userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
+      IdentityResult result = await userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
 
       if (result.Succeeded)
       {
-        return this.RedirectToPage("./ResetPasswordConfirmation");
+        return RedirectToPage("./ResetPasswordConfirmation");
       }
 
       foreach (IdentityError error in result.Errors)
       {
-        this.ModelState.AddModelError(string.Empty, error.Description);
+        ModelState.AddModelError(string.Empty, error.Description);
       }
 
-      return this.Page();
+      return Page();
     }
   }
 }

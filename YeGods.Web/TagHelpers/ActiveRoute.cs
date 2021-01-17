@@ -21,10 +21,10 @@ namespace YeGods.Web
     [HtmlAttributeName("asp-all-route-data", DictionaryAttributePrefix = "asp-route-")]
     public IDictionary<string, string> RouteValues
     {
-      get => this.routeValues ?? (this.routeValues =
+      get => routeValues ?? (routeValues =
                new Dictionary<string, string>(
                  StringComparer.OrdinalIgnoreCase));
-      set => this.routeValues = value;
+      set => routeValues = value;
     }
 
     [HtmlAttributeNotBound]
@@ -35,7 +35,7 @@ namespace YeGods.Web
     {
       base.Process(context, output);
 
-      if (this.ShouldBeActive())
+      if (ShouldBeActive())
       {
         MakeActive(output);
       }
@@ -45,20 +45,20 @@ namespace YeGods.Web
 
     private bool ShouldBeActive()
     {
-      string currentController = this.ViewContext.RouteData.Values["Controller"].ToString();
-      string currentAction = this.ViewContext.RouteData.Values["Action"].ToString();
+      string currentController = ViewContext.RouteData.Values["Controller"].ToString();
+      string currentAction = ViewContext.RouteData.Values["Action"].ToString();
 
-      if (!string.IsNullOrWhiteSpace(this.Controller) && !string.Equals(this.Controller, currentController, StringComparison.CurrentCultureIgnoreCase))
+      if (!string.IsNullOrWhiteSpace(Controller) && !string.Equals(Controller, currentController, StringComparison.CurrentCultureIgnoreCase))
       {
         return false;
       }
 
-      if (!string.IsNullOrWhiteSpace(this.Action) && !string.Equals(this.Action, currentAction, StringComparison.CurrentCultureIgnoreCase))
+      if (!string.IsNullOrWhiteSpace(Action) && !string.Equals(Action, currentAction, StringComparison.CurrentCultureIgnoreCase))
       {
         return false;
       }
 
-      return this.RouteValues.All(routeValue => this.ViewContext.RouteData.Values.ContainsKey(routeValue.Key) && this.ViewContext.RouteData.Values[routeValue.Key].ToString() == routeValue.Value);
+      return RouteValues.All(routeValue => ViewContext.RouteData.Values.ContainsKey(routeValue.Key) && ViewContext.RouteData.Values[routeValue.Key].ToString() == routeValue.Value);
     }
 
     private static void MakeActive(TagHelperOutput output)

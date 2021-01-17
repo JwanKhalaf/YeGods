@@ -24,24 +24,24 @@ namespace YeGods.Web.Controllers
     [HttpGet("/deity/{slug}", Name = "Get deity by name")]
     public async Task<IActionResult> Details(string slug)
     {
-      DeityViewModel requestedDeity = await this.deityService.GetDeityBySlugAsync(slug);
+      DeityViewModel requestedDeity = await deityService.GetDeityBySlugAsync(slug);
 
       if (requestedDeity == null)
       {
-        return this.RedirectToAction("NotFound", "Home");
+        return RedirectToAction("NotFound", "Home");
       }
 
-      this.ViewData["Title"] = requestedDeity.Name;
+      ViewData["Title"] = requestedDeity.Name;
 
-      return this.View(requestedDeity);
+      return View(requestedDeity);
     }
 
     [HttpGet("/deity/{slug}/report", Name = "Submit report on deity")]
     public async Task<IActionResult> SendEmail(string slug)
     {
-      DeityViewModel requestedDeity = await this.deityService.GetDeityBySlugAsync(slug);
+      DeityViewModel requestedDeity = await deityService.GetDeityBySlugAsync(slug);
 
-      if (requestedDeity == null) return this.NotFound();
+      if (requestedDeity == null) return NotFound();
 
       EmailReportViewModel emailReport = new EmailReportViewModel();
 
@@ -51,9 +51,9 @@ namespace YeGods.Web.Controllers
 
       emailReport.IsOfTypeDeity = true;
 
-      this.ViewData["Title"] = $"Report {requestedDeity.Name}";
+      ViewData["Title"] = $"Report {requestedDeity.Name}";
 
-      return this.View(emailReport);
+      return View(emailReport);
     }
 
     [HttpPost("/deity/{slug}/report", Name = "Submit report on deity")]
@@ -61,9 +61,9 @@ namespace YeGods.Web.Controllers
     {
       emailReport.CreatedAt = DateTime.UtcNow;
       
-      await this.emailService.SendEmailAboutEntry(emailReport);
+      await emailService.SendEmailAboutEntry(emailReport);
 
-      return this.Redirect("/home/index");
+      return Redirect("/home/index");
     }
   }
 }

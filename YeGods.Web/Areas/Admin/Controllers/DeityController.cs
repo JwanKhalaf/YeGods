@@ -9,7 +9,7 @@ namespace YeGods.Web.Areas.Admin.Controllers
   using System.Linq;
   using System.Threading.Tasks;
   using ViewModels;
-  using YeGods.ViewModels.Shared;
+  using ViewModels.Shared;
 
   [Area("Admin")]
   [Route("admin/deity")]
@@ -28,93 +28,104 @@ namespace YeGods.Web.Areas.Admin.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Page(SearchViewModel search, int page = 1)
     {
-      DeityPageViewModel deities = await this.deityService.GetPagedDeitiesAsync(search, page);
-      return this.View(deities);
+      DeityPageViewModel deities = await deityService
+        .GetPagedDeitiesAsync(search, page);
+
+      return View(deities);
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Create()
     {
       DeityCreateViewModel newDeity = new DeityCreateViewModel();
-      newDeity.Categories = await this.GetCategories();
-      return this.View(newDeity);
+
+      newDeity.Categories = await GetCategories();
+
+      return View(newDeity);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Create(DeityCreateViewModel newDeity)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        newDeity.Categories = await this.GetCategories();
-        return this.View(newDeity);
+        newDeity.Categories = await GetCategories();
+
+        return View(newDeity);
       }
 
-      await this.deityService.CreateNewDeity(newDeity);
-      return this.Redirect("Page");
+      await deityService.CreateNewDeity(newDeity);
+
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Edit(int id)
     {
-      DeityUpdateViewModel deityToUpdate = await this.deityService.GetDeityByIdForUpdateAsync(id);
-      deityToUpdate.Categories = await this.GetCategories();
-      return this.View(deityToUpdate);
+      DeityUpdateViewModel deityToUpdate = await deityService.GetDeityByIdForUpdateAsync(id);
+
+      deityToUpdate.Categories = await GetCategories();
+
+      return View(deityToUpdate);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Edit(DeityUpdateViewModel updatedDeity)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        updatedDeity.Categories = await this.GetCategories();
-        return this.View(updatedDeity);
+        updatedDeity.Categories = await GetCategories();
+
+        return View(updatedDeity);
       }
 
-      await this.deityService.UpdateDeityAsync(updatedDeity);
-      return this.Redirect("Page");
+      await deityService.UpdateDeityAsync(updatedDeity);
+
+      return Redirect("Page");
     }
 
     public async Task<IActionResult> Delete(
       int? id,
       bool? saveChangesError = false)
     {
-      if (id == null) return this.BadRequest();
+      if (id == null) return BadRequest();
 
       if (saveChangesError.GetValueOrDefault())
       {
-        this.ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+        ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
       }
 
-      DeityViewModel viewModel = await this.deityService.GetDeityByIdAsync(id.Value);
+      DeityViewModel viewModel = await deityService.GetDeityByIdAsync(id.Value);
 
-      if (viewModel == null) return this.NotFound();
+      if (viewModel == null) return NotFound();
 
-      return this.View(viewModel);
+      return View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-      if (id == 0) return this.BadRequest();
+      if (id == 0) return BadRequest();
 
       try
       {
-        await this.deityService.DeleteDeityAsync(id);
+        await deityService.DeleteDeityAsync(id);
       }
       catch (RetryLimitExceededException)
       {
-        return this.RedirectToAction("Delete", new { id, saveChangesError = true });
+        return RedirectToAction("Delete", new { id, saveChangesError = true });
       }
 
-      return this.RedirectToAction("Page", new { showDeleted = false });
+      return RedirectToAction("Page", new { showDeleted = false });
     }
 
     private async Task<List<SelectListItem>> GetCategories()
     {
-      List<CategoryViewModel> categories = await this.categoryService.GetAllCategories();
+      List<CategoryViewModel> categories = await categoryService.GetAllCategories();
+
       return categories.Select(s => new SelectListItem
       {
         Text = s.Name,

@@ -20,22 +20,22 @@ namespace YeGods.Web.Controllers
     {
       if (string.IsNullOrEmpty(searchTerm))
       {
-        return this.RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Home");
       }
 
       if (isDeity)
       {
-        return this.RedirectToAction("Details", "Deity", new { slug = searchTerm });
+        return RedirectToAction("Details", "Deity", new { slug = searchTerm });
       }
 
-      return this.RedirectToAction("Details", "BeliefSystem", new { slug = searchTerm });
+      return RedirectToAction("Details", "BeliefSystem", new { slug = searchTerm });
     }
 
     [HttpPost("/search/suggestions/{searchTerm}", Name = "Get search suggestions")]
     public async Task<JsonResult> GetSearchSuggestions(string searchTerm)
     {
       string parsedSearchTerm = searchTerm.NormalizeStringForUrl();
-      SearchResultViewModel searchResults = await this.searchService.SearchDeitiesBySluxAsync(parsedSearchTerm);
+      SearchResultViewModel searchResults = await searchService.SearchDeitiesBySluxAsync(parsedSearchTerm);
       return new JsonResult(searchResults);
     }
   }
