@@ -23,26 +23,26 @@ namespace YeGods.Web.Controllers
     [HttpGet("/beliefsystem/{slug}", Name = "Get belief system by name")]
     public async Task<IActionResult> Details(string slug)
     {
-      BeliefSystemViewModel requestedBeliefSystem = await this.beliefSystemService
+      BeliefSystemViewModel requestedBeliefSystem = await beliefSystemService
         .GetBeliefSystemBySlugAsync(slug);
 
       if (requestedBeliefSystem == null)
       {
-        return this.RedirectToAction("NotFound", "Home");
+        return RedirectToAction("NotFound", "Home");
       }
 
-      this.ViewData["Title"] = requestedBeliefSystem.Name;
+      ViewData["Title"] = requestedBeliefSystem.Name;
 
-      return this.View(requestedBeliefSystem);
+      return View(requestedBeliefSystem);
     }
 
     [HttpGet("/beliefsystem/{slug}/report", Name = "Submit report on a belief system")]
     public async Task<IActionResult> SendEmail(string slug)
     {
-      BeliefSystemViewModel requestedBeliefSystem = await this.beliefSystemService
+      BeliefSystemViewModel requestedBeliefSystem = await beliefSystemService
         .GetBeliefSystemBySlugAsync(slug);
 
-      if (requestedBeliefSystem == null) return this.NotFound();
+      if (requestedBeliefSystem == null) return NotFound();
 
       EmailReportViewModel emailReport = new EmailReportViewModel();
 
@@ -52,9 +52,9 @@ namespace YeGods.Web.Controllers
 
       emailReport.IsOfTypeDeity = false;
 
-      this.ViewData["Title"] = $"Report {requestedBeliefSystem.Name}";
+      ViewData["Title"] = $"Report {requestedBeliefSystem.Name}";
 
-      return this.View(emailReport);
+      return View(emailReport);
     }
 
     [HttpPost("/beliefsystem/{slug}/report", Name = "Submit report on a belief system")]
@@ -62,9 +62,9 @@ namespace YeGods.Web.Controllers
     {
       emailReport.CreatedAt = DateTime.UtcNow;
 
-      await this.emailService.SendEmailAboutEntry(emailReport);
+      await emailService.SendEmailAboutEntry(emailReport);
 
-      return this.Redirect("/home/index");
+      return Redirect("/home/index");
     }
   }
 }

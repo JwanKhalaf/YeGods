@@ -22,91 +22,98 @@ namespace YeGods.Web.Areas.Admin.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Page(bool showDeleted, int page = 1)
     {
-      CategoryPageViewModel deities = await this.categoryService.GetPagedCategoriesAsync(showDeleted, page);
-      return this.View(deities);
+      CategoryPageViewModel deities = await categoryService
+        .GetPagedCategoriesAsync(showDeleted, page);
+
+      return View(deities);
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Create()
     {
       CategoryCreateViewModel newDeity = new CategoryCreateViewModel();
-      newDeity.Categories = await this.GetCategories();
-      return this.View(newDeity);
+
+      newDeity.Categories = await GetCategories();
+
+      return View(newDeity);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Create(CategoryCreateViewModel newCategory)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        newCategory.Categories = await this.GetCategories();
-        return this.View(newCategory);
+        newCategory.Categories = await GetCategories();
+
+        return View(newCategory);
       }
 
-      await this.categoryService.CreateNewCategoryAsync(newCategory);
-      return this.Redirect("Page");
+      await categoryService.CreateNewCategoryAsync(newCategory);
+
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Edit(int id)
     {
-      CategoryUpdateViewModel categoryToUpdate = await this.categoryService
+      CategoryUpdateViewModel categoryToUpdate = await categoryService
         .GetCategoryByIdForUpdateAsync(id);
 
-      categoryToUpdate.Categories = await this.GetCategoriesExcept(categoryToUpdate.Id);
+      categoryToUpdate.Categories = await GetCategoriesExcept(categoryToUpdate.Id);
 
-      return this.View(categoryToUpdate);
+      return View(categoryToUpdate);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Edit(CategoryUpdateViewModel updatedCategory)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        updatedCategory.Categories = await this.GetCategoriesExcept(updatedCategory.Id);
+        updatedCategory.Categories = await GetCategoriesExcept(updatedCategory.Id);
 
-        return this.View(updatedCategory);
+        return View(updatedCategory);
       }
 
-      await this.categoryService
+      await categoryService
         .UpdateCateogryAsync(updatedCategory);
 
-      return this.Redirect("Page");
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Delete(int id)
     {
-      CategoryDeleteViewModel categoryToDelete = await this.categoryService
+      CategoryDeleteViewModel categoryToDelete = await categoryService
         .GetCategoryByIdForDeleteAsync(id);
 
       if (categoryToDelete.EntitiesCount != 0)
       {
-        this.ViewBag.Message = $"You cannot delete this category as there are {categoryToDelete.EntitiesCount} entities associated with it.";
+        ViewBag.Message = $"You cannot delete this category as there are {categoryToDelete.EntitiesCount} entities associated with it.";
       }
 
-      return this.View(categoryToDelete);
+      return View(categoryToDelete);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Delete(CategoryDeleteViewModel category)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.View(category);
+        return View(category);
       }
 
-      await this.categoryService.DeleteCategoryAsync(category.Id);
-      return this.Redirect("Page");
+      await categoryService.DeleteCategoryAsync(category.Id);
+
+      return Redirect("Page");
     }
 
     #region Helpers
     private async Task<List<SelectListItem>> GetCategories()
     {
-      List<CategoryViewModel> categories = await this.categoryService.GetAllCategories();
+      List<CategoryViewModel> categories = await categoryService.GetAllCategories();
       return categories.Select(s => new SelectListItem
       {
         Text = s.Name,
@@ -116,7 +123,7 @@ namespace YeGods.Web.Areas.Admin.Controllers
 
     private async Task<List<SelectListItem>> GetCategoriesExcept(int categoryId)
     {
-      List<CategoryViewModel> categories = await this.categoryService.GetAllCategoriesExcept(categoryId);
+      List<CategoryViewModel> categories = await categoryService.GetAllCategoriesExcept(categoryId);
       return categories.Select(s => new SelectListItem
       {
         Text = s.Name,

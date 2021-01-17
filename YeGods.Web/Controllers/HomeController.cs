@@ -30,48 +30,48 @@ namespace YeGods.Web.Controllers
     {
       if (TempData["NotFound"] != null)
       {
-        this.ViewBag.NotFoundMessage = TempData["NotFound"].ToString();
+        ViewBag.NotFoundMessage = TempData["NotFound"].ToString();
       }
       
-      this.ViewData["Title"] = "Home";
+      ViewData["Title"] = "Home";
 
-      RandomDeityViewModel randomDeity = await this.deityService
+      RandomDeityViewModel randomDeity = await deityService
         .GetRandomDeity();
 
-      return this.View(randomDeity);
+      return View(randomDeity);
     }
 
     public IActionResult About()
     {
-      this.ViewData["Title"] = "About";
-      return this.View();
+      ViewData["Title"] = "About";
+      return View();
     }
 
     public IActionResult Contact()
     {
-      return this.View();
+      return View();
     }
 
     public async Task<IActionResult> Glossary()
     {
-      this.ViewData["Title"] = "Glossary";
+      ViewData["Title"] = "Glossary";
 
-      Dictionary<char, List<GlossaryViewModel>> glossaries = await this.glossaryService
+      Dictionary<char, List<GlossaryViewModel>> glossaries = await glossaryService
         .GetGlossaryByLetterGroupingAsync();
 
-      return this.View(glossaries);
+      return View(glossaries);
     }
 
     public IActionResult Contribute()
     {
-      this.ViewData["Title"] = "How to contribute";
+      ViewData["Title"] = "How to contribute";
 
-      return this.View();
+      return View();
     }
 
     public IActionResult SuggestEntry()
     {
-      return this.View();
+      return View();
     }
 
     public IActionResult Acknowledgements()
@@ -89,20 +89,20 @@ namespace YeGods.Web.Controllers
     {
       newSuggestion.CreatedAt = DateTime.UtcNow;
 
-      await this.emailService.SendEmailAboutNewSuggestion(newSuggestion);
+      await emailService.SendEmailAboutNewSuggestion(newSuggestion);
 
-      return this.Redirect("/home/index");
+      return Redirect("/home/index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-      return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+      return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
     public IActionResult NotFound()
     {
-      return this.View();
+      return View();
     }
   }
 }

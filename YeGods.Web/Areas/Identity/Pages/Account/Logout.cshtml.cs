@@ -29,16 +29,16 @@ namespace YeGods.Web.Areas.Identity.Pages.Account
 
     public async Task<IActionResult> OnPost(string returnUrl = null)
     {
-      await this.signInManager.SignOutAsync();
+      await signInManager.SignOutAsync();
 
-      this.logger.LogInformation("User logged out.");
+      logger.LogInformation("User logged out.");
 
       if (returnUrl != null)
       {
-        return this.LocalRedirect(returnUrl);
+        return LocalRedirect(returnUrl);
       }
 
-      return this.Page();
+      return Page();
     }
   }
 }

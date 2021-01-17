@@ -4,7 +4,7 @@ namespace YeGods.Web.Areas.Admin.Controllers
   using System.Threading.Tasks;
   using Services;
   using ViewModels;
-  using YeGods.ViewModels.Shared;
+  using ViewModels.Shared;
 
   [Area("Admin")]
   [Route("admin/glossary")]
@@ -20,57 +20,57 @@ namespace YeGods.Web.Areas.Admin.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Page(SearchViewModel search, int page = 1)
     {
-      GlossaryPageViewModel glossaries = await this.glossaryService
+      GlossaryPageViewModel glossaries = await glossaryService
         .GetPagedGlossariesAsync(search, page);
 
-      return this.View(glossaries);
+      return View(glossaries);
     }
 
     [Route("[action]")]
     public IActionResult Create()
     {
       GlossaryCreateViewModel newGlossary = new GlossaryCreateViewModel();
-      return this.View(newGlossary);
+      return View(newGlossary);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Create(GlossaryCreateViewModel newGlossary)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.View(newGlossary);
+        return View(newGlossary);
       }
 
-      await this.glossaryService.CreateNewGlossary(newGlossary);
-      return this.Redirect("Page");
+      await glossaryService.CreateNewGlossary(newGlossary);
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Edit(int id)
     {
-      GlossaryUpdateViewModel glossaryToUpdate = await this.glossaryService.GetGlossaryByIdForUpdateAsync(id);
-      return this.View(glossaryToUpdate);
+      GlossaryUpdateViewModel glossaryToUpdate = await glossaryService.GetGlossaryByIdForUpdateAsync(id);
+      return View(glossaryToUpdate);
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Edit(GlossaryUpdateViewModel updatedGlossary)
     {
-      if (!this.ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        return this.View(updatedGlossary);
+        return View(updatedGlossary);
       }
 
-      await this.glossaryService.UpdateGlossaryAsync(updatedGlossary);
-      return this.Redirect("Page");
+      await glossaryService.UpdateGlossaryAsync(updatedGlossary);
+      return Redirect("Page");
     }
 
     [Route("[action]")]
     public async Task<IActionResult> Delete(int id)
     {
-      await this.glossaryService.DeleteGlossary(id);
-      return this.Redirect("Page");
+      await glossaryService.DeleteGlossary(id);
+      return Redirect("Page");
     }
   }
 }
